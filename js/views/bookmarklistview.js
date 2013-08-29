@@ -85,6 +85,7 @@ var BookmarkListView = Backbone.View.extend({
     createAlert : function(msg) {
         var html = '';
         html += '<div class="alert alert-block alert-info">';
+        html += '<button type="button" class="close" data-dismiss="alert" href="#">&times;</button>'
         html += '<strong>Oops! Your bookmark wasn\'t added.</strong><br>'+msg;
         html += '</div>';
         return html;
@@ -97,7 +98,11 @@ var BookmarkListView = Backbone.View.extend({
         if (!input.address || input.address === 'http://') {
             warning.push('Please input an address for your bookmark.');
         }
-        var existingModel = this.bookmarkList.where({address: 'http://' + input.address});
+        var modAddress = input.address;
+        if (modAddress.indexOf('http://') !== 0) {
+            modAddress = 'http://' + modAddress;
+        }
+        var existingModel = this.bookmarkList.where({address: modAddress});
         if (input.address && existingModel.length > 0) {
             warning.push('You\'ve already added this link!');
         }
