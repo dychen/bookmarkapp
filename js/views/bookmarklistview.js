@@ -26,20 +26,11 @@ var BookmarkListView = Backbone.View.extend({
         }
     },
     addBookmark : function() {
-        var warning = '';
         var name = this.$('#createBookmarkName').val().trim();
         var address = this.$('#createBookmarkAddress').val().trim();
-        if (!address) {
-            warning = 'You must input an address for your bookmark.';
-        }
-        if (!name) {
-            warning = 'You must input a name for your bookmark.';
-            if (!address) {
-            warning = 'You must input both a name and an address for your bookmark.';
-            }
-        }
-        if (warning) {
-            var alert = this.createAlert(warning);
+        var warnings = this.errorCheck({name: name, address: address});
+        if (warnings) {
+            var alert = this.createAlert(warnings);
             $('#alertbox').html(alert);
             return;
         }
@@ -58,10 +49,24 @@ var BookmarkListView = Backbone.View.extend({
     /* Helpers */
     createAlert : function(msg) {
         var html = '';
-        html += '<div class="alert">';
-        html += '<strong>Oops!</strong> '+msg;
+        html += '<div class="alert alert-block">';
+        html += '<strong>Oops! Your bookmark wasn\'t added.</strong><br>'+msg;
         html += '</div>';
         return html;
+    },
+    errorCheck : function(input) {
+        var warning = [];
+        if (!input.address) {
+            warning.push('You must input an address for your bookmark.');
+        }
+        if (!input.name) {
+            warning.push('You must input a name for your bookmark.');
+        }
+        var existingModel = this.bookmarkList.where({address: input.address});
+        if (input.address && existingModel.length > 0) {
+            warning.push('You already added this link!');
+        }
+        return warning.join('<br>');
     }
 });
 
