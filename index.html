@@ -20,31 +20,31 @@
             <h1 id="bookmarkHead">Bookmarks</h1>
             <div id="alertbox"></div>
             <section id="bookmarkapp">
-                <h4>Add a bookmark</h4>
-                <input id="createBookmarkName" placeholder="Name">
-                <input id="createBookmarkAddress" placeholder="Website address">
-                <input id="createBookmarkTags" placeholder="Tags">
-                <div class="btn-group">
-                    <button id="createBookmark" class="btn btn-large btn-success">Add bookmark</button>
-                    <button id="filterBookmarks" class="btn btn-large btn-primary">Filter</button>
+                <div class="well">
+                    <input id="createBookmarkName" placeholder="Name">
+                    <input id="createBookmarkAddress" placeholder="Website address">
+                    <input id="createBookmarkTags" placeholder="Tags">
+                    <div class="btn-group">
+                        <button id="createBookmark" class="btn btn-large btn-success">Add bookmark</button>
+                        <button id="filterBookmarks" class="btn btn-large btn-primary">Filter</button>
+                    </div>
                 </div>
-                <br><br>
-                <button id="showAllBookmarks" class="btn btn-large btn-primary">Show All</button>
-                <br><br>
-                <table class="table table-striped" id="bookmarkList">
-                    <th width="20%">Name</th>
-                    <th width="30%">Address</th>
-                    <th width="30%">Tags</th>
-                    <th width="20%"></th>
-                </table>
+                <div class="well">
+                    <div>
+                        <button id="showAllBookmarks" class="btn btn-large btn-primary">Show All</button>
+                    </div><br>
+                    <div class="well">
+                        <table class="table table-striped" id="bookmarkList"></table>
+                    </div>
+                </div>
             </section>
         </div>
 
         <!-- Template for BookmarkView -->
         <script type="text/template" id="bookmarkTemplate">
-            <td width="20%"><label id="showName"><%- name %></label><input id="editName" value="<%- name %>"></td>
-            <td width="30%"><label id="showAddress"><%- address %></label><input id="editAddress" value="<%- address %>"></td>
-            <td width="30%"><label id="showTags"><%- tags %></label><input id="editTags" value="<%- tags %>"></td>
+            <td width="25%"><label id="showName"><%- name %></label><input id="editName" value="<%- name %>"></td>
+            <td width="25%"><label id="showAddress"><%- address %></label><input id="editAddress" value="<%- address %>"></td>
+            <td width="25%"><label id="showTags"><%- tags %></label><input id="editTags" value="<%- tags %>"></td>
             <td>
                 <div class="btn-group">
                     <button id="visitPage" class="btn btn-success">Visit page</button>

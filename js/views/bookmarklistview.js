@@ -11,6 +11,8 @@ var BookmarkListView = Backbone.View.extend({
         this.bookmarkList = new BookmarkList();
         //this.bookmarkList.bind('add', this.showAddedBookmark);
         //this.updateHeader(this.numShown);
+        $('#bookmarkList').html(this.tableHeader());
+
     },
     render : function() {
         // Currently empty
@@ -77,7 +79,7 @@ var BookmarkListView = Backbone.View.extend({
     /* Helpers */
     createAlert : function(msg) {
         var html = '';
-        html += '<div class="alert alert-block">';
+        html += '<div class="alert alert-block alert-info">';
         html += '<strong>Oops! Your bookmark wasn\'t added.</strong><br>'+msg;
         html += '</div>';
         return html;
@@ -90,7 +92,7 @@ var BookmarkListView = Backbone.View.extend({
         if (input.address == '') {
             warning.push('Please input an address for your bookmark.');
         }
-        var existingModel = this.bookmarkList.where({address: input.address});
+        var existingModel = this.bookmarkList.where({address: 'http://' + input.address});
         if (input.address && existingModel.length > 0) {
             warning.push('You\'ve already added this link!');
         }
@@ -103,10 +105,10 @@ var BookmarkListView = Backbone.View.extend({
     */
     tableHeader : function() {
         var html = '';
-        html += '<th width="20%">Name</th>';
-        html += '<th width="30%">Address</th>';
-        html += '<th width="30%">Tags</th>';
-        html += '<th width="10%"></th>';
+        html += '<th width="25%">Name</th>';
+        html += '<th width="25%">Address</th>';
+        html += '<th width="25%">Tags</th>';
+        html += '<th width="25%"></th>';
         return html;
     }
 });
