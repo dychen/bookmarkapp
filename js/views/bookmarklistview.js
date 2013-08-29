@@ -21,14 +21,13 @@ var BookmarkListView = Backbone.View.extend({
     getInputValues : function() {
         return {
             name: this.$('#createBookmarkName').val().trim(),
-            address: this.$('#createBookmarkAddress').val().trim(),
+            address: 'http://' + this.$('#createBookmarkAddress').val().trim(),
             tags: this.$('#createBookmarkTags').val().trim()
         }
     },
     addBookmark : function() {
-        var name = this.$('#createBookmarkName').val().trim();
-        var address = this.$('#createBookmarkAddress').val().trim();
-        var warnings = this.errorCheck({name: name, address: address});
+        var input = this.getInputValues()
+        var warnings = this.errorCheck({name: input.name, address: input.address});
         if (warnings) {
             var alert = this.createAlert(warnings);
             $('#alertbox').html(alert);
@@ -38,7 +37,7 @@ var BookmarkListView = Backbone.View.extend({
             $('#alertbox').html('');
         }
         this.numBookmarks++;
-        var bookmark = new Bookmark(this.getInputValues());
+        var bookmark = new Bookmark(input);
         this.bookmarkList.add(bookmark);
     },
     showAddedBookmark : function(bookmark) {

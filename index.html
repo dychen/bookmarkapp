@@ -28,8 +28,9 @@
                 <table class="table table-striped" id="bookmarkList">
                     <th width="20%">Name</th>
                     <th width="30%">Address</th>
-                    <th width="40%">Tags</th>
-                    <th width="10%"></th>
+                    <th width="30%">Tags</th>
+                    <th width="5%"></th>
+                    <th width="5%"></th>
                 </table>
             </section>
         </div>
@@ -38,8 +39,9 @@
         <script type="text/template" id="bookmarkTemplate">
             <td width="20%"><label id="showName"><%- name %></label><input id="editName" value="<%- name %>"></td>
             <td width="30%"><label id="showAddress"><%- address %></label><input id="editAddress" value="<%- address %>"></td>
-            <td width="40%"><label id="showTags"><%- tags %></label><input id="editTags" value="<%- tags %>"></td>
-            <td><button id="deleteBookmark" width="10%">Delete</button></td>
+            <td width="30%"><label id="showTags"><%- tags %></label><input id="editTags" value="<%- tags %>"></td>
+            <td><button id="visitPage" class="btn btn-primary" width="5%">Visit page</button></td>
+            <td><button id="deleteBookmark" class="btn btn-primary" width="5%">Delete</button></td>
         </script>
 
         <script src="js/lib/jquery.min.js"></script>

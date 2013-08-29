@@ -11,10 +11,11 @@ var BookmarkView = Backbone.View.extend({
         'blur #editName': 'close',
         'blur #editAddress': 'close',
         'blur #editTags': 'close',
-        'click button#deleteBookmark': 'removeBookmark'
+        'click button#deleteBookmark': 'removeBookmark',
+        'click button#visitPage': 'visitPage'
     },
     initialize : function() {
-        _.bindAll(this, 'render', 'updateName', 'updateAddress', 'updateTags', 'nameOnEnter', 'addressOnEnter', 'tagsOnEnter', 'close', 'removeBookmark', 'unshowBookmark');
+        _.bindAll(this, 'render', 'updateName', 'updateAddress', 'updateTags', 'nameOnEnter', 'addressOnEnter', 'tagsOnEnter', 'close', 'removeBookmark', 'unshowBookmark', 'visitPage');
         this.model.bind('remove', this.unshowBookmark);
         this.model.listenTo(this.model, 'change', this.render);
     },
@@ -61,7 +62,7 @@ var BookmarkView = Backbone.View.extend({
     addressOnEnter : function(e) {
         // ENTER_KEY is defined in app.js
         if (e.which === ENTER_KEY) {
-            var value = this.$editAddress.val().trim();
+            var value = 'http://' + this.$editAddress.val().trim();
             if (value) {
                 this.model.save({ address: value });
             }
@@ -93,4 +94,8 @@ var BookmarkView = Backbone.View.extend({
     unshowBookmark : function() {
         $(this.el).remove();
     },
+    /* Other */
+    visitPage : function() {
+        window.open(this.model.get('address'),'_newtab');
+    }
 });
