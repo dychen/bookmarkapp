@@ -2,7 +2,8 @@ var BookmarkListView = Backbone.View.extend({
     el: '#bookmarkapp',
     events: {
         'click button#createBookmark': 'addBookmark',
-        'click button#filterBookmarks': 'filterBookmarks'
+        'click button#filterBookmarks': 'filterBookmarks',
+        'click button#showAllBookmarks': 'showAllBookmarks'
     },
     initialize : function() {
         //_.bindAll(this, 'render', 'addBookmark', 'showAddedBookmark');
@@ -44,7 +45,7 @@ var BookmarkListView = Backbone.View.extend({
         $('#createBookmarkAddress').val('');
         $('#createBookmarkTags').val('');
     },
-    showAllBookmarks : function(inputArray) {
+    showFilteredBookmarks : function(inputArray) {
         $('#bookmarkList').html('');
         for (var i=0; i<inputArray.length; i++) {
             this.showAddedBookmark(inputArray[i]);
@@ -57,7 +58,13 @@ var BookmarkListView = Backbone.View.extend({
                    bookmark.get('address').indexOf(input.address) !== -1 &&
                    bookmark.get('tags').indexOf(input.tags) !== -1;
         });
-        this.showAllBookmarks(filteredBookmarks);
+        this.showFilteredBookmarks(filteredBookmarks);
+    },
+    showAllBookmarks : function() {
+        $('#bookmarkList').html('');
+        this.bookmarkList.each(function(bookmark) {
+            this.showAddedBookmark(bookmark);
+        }, this);
     },
     /* Helpers */
     createAlert : function(msg) {
