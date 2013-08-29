@@ -45,6 +45,10 @@ var BookmarkListView = Backbone.View.extend({
         var bookmarkView = new BookmarkView({ model: bookmark });
         bookmarkView.render();
         $('#bookmarkList').append(bookmarkView.el);
+        // Reset input form values to default on submit.
+        $('#createBookmarkName').val('');
+        $('#createBookmarkAddress').val('');
+        $('#createBookmarkTags').val('');
     },
     /* Helpers */
     createAlert : function(msg) {
