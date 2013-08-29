@@ -6,7 +6,6 @@ var BookmarkListView = Backbone.View.extend({
         'click button#showAllBookmarks': 'showAllBookmarks'
     },
     initialize : function() {
-        console.log(this);
         //_.bindAll(this, 'render', 'addBookmark', 'showAddedBookmark');
         this.numShown = 0;
         this.bookmarkList = new BookmarkList();
@@ -19,7 +18,7 @@ var BookmarkListView = Backbone.View.extend({
     getInputValues : function() {
         return {
             name: this.$('#createBookmarkName').val().trim(),
-            address: 'http://' + this.$('#createBookmarkAddress').val().trim(),
+            address: this.$('#createBookmarkAddress').val().trim(),
             tags: this.$('#createBookmarkTags').val().trim()
         }
     },
@@ -34,6 +33,7 @@ var BookmarkListView = Backbone.View.extend({
         else {
             $('#alertbox').html('');
         }
+        input.address = 'http://' + input.address;
         var bookmark = new Bookmark(input);
         this.bookmarkList.add(bookmark);
         this.showAddedBookmark(bookmark);
@@ -50,7 +50,7 @@ var BookmarkListView = Backbone.View.extend({
         this.updateHeader(this.numShown);
     },
     showFilteredBookmarks : function(inputArray) {
-        $('#bookmarkList').html('');
+        $('#bookmarkList').html(this.tableHeader());
         for (var i=0; i<inputArray.length; i++) {
             this.showAddedBookmark(inputArray[i]);
         }
@@ -58,7 +58,7 @@ var BookmarkListView = Backbone.View.extend({
         this.updateHeader(this.numShown);
     },
     showAllBookmarks : function() {
-        $('#bookmarkList').html('');
+        $('#bookmarkList').html(this.tableHeader());
         this.bookmarkList.each(function(bookmark) {
             this.showAddedBookmark(bookmark);
         }, this);
@@ -87,7 +87,7 @@ var BookmarkListView = Backbone.View.extend({
         if (!input.name) {
             warning.push('Please input a name for your bookmark.');
         }
-        if (input.address == 'http://') {
+        if (input.address == '') {
             warning.push('Please input an address for your bookmark.');
         }
         var existingModel = this.bookmarkList.where({address: input.address});
@@ -98,6 +98,14 @@ var BookmarkListView = Backbone.View.extend({
     },
     updateHeader : function(n) {
         $('#bookmarkHead').html('Bookmarks (' + n + ')');
+    },
+    tableHeader : function() {
+        var html = '';
+        html += '<th width="20%">Name</th>';
+        html += '<th width="30%">Address</th>';
+        html += '<th width="30%">Tags</th>';
+        html += '<th width="10%"></th>';
+        return html;
     }
 });
 
