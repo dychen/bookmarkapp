@@ -7,10 +7,10 @@ var BookmarkListView = Backbone.View.extend({
     },
     initialize : function() {
         //_.bindAll(this, 'render', 'addBookmark', 'showAddedBookmark');
-        this.numShown = 0;
+        //this.numShown = 0;
         this.bookmarkList = new BookmarkList();
         //this.bookmarkList.bind('add', this.showAddedBookmark);
-        this.updateHeader(this.numShown);
+        //this.updateHeader(this.numShown);
     },
     render : function() {
         // Currently empty
@@ -46,24 +46,24 @@ var BookmarkListView = Backbone.View.extend({
         $('#createBookmarkName').val('');
         $('#createBookmarkAddress').val('');
         $('#createBookmarkTags').val('');
-        this.numShown++;
-        this.updateHeader(this.numShown);
+        //this.numShown++;
+        //this.updateHeader(this.numShown);
     },
     showFilteredBookmarks : function(inputArray) {
         $('#bookmarkList').html(this.tableHeader());
         for (var i=0; i<inputArray.length; i++) {
             this.showAddedBookmark(inputArray[i]);
         }
-        this.numShown = inputArray.length;
-        this.updateHeader(this.numShown);
+        //this.numShown = inputArray.length;
+        //this.updateHeader(this.numShown);
     },
     showAllBookmarks : function() {
         $('#bookmarkList').html(this.tableHeader());
         this.bookmarkList.each(function(bookmark) {
             this.showAddedBookmark(bookmark);
         }, this);
-        this.numShown = this.bookmarkList.length;
-        this.updateHeader(this.numShown);
+        //this.numShown = this.bookmarkList.length;
+        //this.updateHeader(this.numShown);
     },
     filterBookmarks : function() {
         var input = this.getInputValues();
@@ -96,9 +96,11 @@ var BookmarkListView = Backbone.View.extend({
         }
         return warning.join('<br>');
     },
+    /*
     updateHeader : function(n) {
         $('#bookmarkHead').html('Bookmarks (' + n + ')');
     },
+    */
     tableHeader : function() {
         var html = '';
         html += '<th width="20%">Name</th>';
