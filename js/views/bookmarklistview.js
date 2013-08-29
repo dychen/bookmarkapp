@@ -6,10 +6,12 @@ var BookmarkListView = Backbone.View.extend({
         'click button#showAllBookmarks': 'showAllBookmarks'
     },
     initialize : function() {
+        console.log(this);
         //_.bindAll(this, 'render', 'addBookmark', 'showAddedBookmark');
-        this.numBookmarks = 0;
+        this.numShown = 0;
         this.bookmarkList = new BookmarkList();
-        this.bookmarkList.bind('add', this.showAddedBookmark);
+        //this.bookmarkList.bind('add', this.showAddedBookmark);
+        this.updateHeader(this.numShown);
     },
     render : function() {
         // Currently empty
@@ -32,9 +34,9 @@ var BookmarkListView = Backbone.View.extend({
         else {
             $('#alertbox').html('');
         }
-        this.numBookmarks++;
         var bookmark = new Bookmark(input);
         this.bookmarkList.add(bookmark);
+        this.showAddedBookmark(bookmark);
     },
     showAddedBookmark : function(bookmark) {
         var bookmarkView = new BookmarkView({ model: bookmark });
@@ -44,12 +46,24 @@ var BookmarkListView = Backbone.View.extend({
         $('#createBookmarkName').val('');
         $('#createBookmarkAddress').val('');
         $('#createBookmarkTags').val('');
+        this.numShown++;
+        this.updateHeader(this.numShown);
     },
     showFilteredBookmarks : function(inputArray) {
         $('#bookmarkList').html('');
         for (var i=0; i<inputArray.length; i++) {
             this.showAddedBookmark(inputArray[i]);
         }
+        this.numShown = inputArray.length;
+        this.updateHeader(this.numShown);
+    },
+    showAllBookmarks : function() {
+        $('#bookmarkList').html('');
+        this.bookmarkList.each(function(bookmark) {
+            this.showAddedBookmark(bookmark);
+        }, this);
+        this.numShown = this.bookmarkList.length;
+        this.updateHeader(this.numShown);
     },
     filterBookmarks : function() {
         var input = this.getInputValues();
@@ -59,12 +73,6 @@ var BookmarkListView = Backbone.View.extend({
                    bookmark.get('tags').indexOf(input.tags) !== -1;
         });
         this.showFilteredBookmarks(filteredBookmarks);
-    },
-    showAllBookmarks : function() {
-        $('#bookmarkList').html('');
-        this.bookmarkList.each(function(bookmark) {
-            this.showAddedBookmark(bookmark);
-        }, this);
     },
     /* Helpers */
     createAlert : function(msg) {
@@ -87,6 +95,9 @@ var BookmarkListView = Backbone.View.extend({
             warning.push('You\'ve already added this link!');
         }
         return warning.join('<br>');
+    },
+    updateHeader : function(n) {
+        $('#bookmarkHead').html('Bookmarks (' + n + ')');
     }
 });
 
