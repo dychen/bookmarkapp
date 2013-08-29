@@ -31,9 +31,6 @@ var BookmarkListView = Backbone.View.extend({
             $('#alertbox').html(alert);
             return;
         }
-        else {
-            $('#alertbox').html('');
-        }
         if (input.address.indexOf('http://') !== 0) {
             input.address = 'http://' + input.address;
         }
@@ -49,10 +46,7 @@ var BookmarkListView = Backbone.View.extend({
         var bookmarkView = new BookmarkView({ model: bookmark, collection: this });
         bookmarkView.render();
         $('#bookmarkList').append(bookmarkView.el);
-        // Reset input form values to default on submit.
-        $('#createBookmarkName').val('');
-        $('#createBookmarkAddress').val('');
-        $('#createBookmarkTags').val('');
+        this.resetFields();
         //this.numShown++;
         //this.updateHeader(this.numShown);
     },
@@ -61,6 +55,7 @@ var BookmarkListView = Backbone.View.extend({
         for (var i=0; i<inputArray.length; i++) {
             this.showAddedBookmark(inputArray[i]);
         }
+        this.resetFields();
         //this.numShown = inputArray.length;
         //this.updateHeader(this.numShown);
     },
@@ -69,6 +64,7 @@ var BookmarkListView = Backbone.View.extend({
         this.bookmarkList.each(function(bookmark) {
             this.showAddedBookmark(bookmark);
         }, this);
+        this.resetFields();
         //this.numShown = this.bookmarkList.length;
         //this.updateHeader(this.numShown);
     },
@@ -89,6 +85,12 @@ var BookmarkListView = Backbone.View.extend({
         html += '<strong>Oops! Your bookmark wasn\'t added.</strong><br>'+msg;
         html += '</div>';
         return html;
+    },
+    resetFields: function() {
+        $('#alertbox').html('');
+        $('#createBookmarkName').val('');
+        $('#createBookmarkAddress').val('');
+        $('#createBookmarkTags').val('');
     },
     errorCheck : function(input) {
         var warning = [];
