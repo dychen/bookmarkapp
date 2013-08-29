@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+        <title>My Bookmarking Application</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/justified-nav.css">
+    </head>
+    <body>
+        <div class="navbar">
+            <ul class="nav nav-justified">
+                <li><a class="brand" href="#">Bookmarks</a></li>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </div>
+        <div class="container">
+            <h1>Bookmarks</h1>
+            <div id="alertbox"></div>
+            <section id="bookmarkapp">
+                <h4>Add a bookmark</h4>
+                <input id="createBookmarkName" placeholder="Name">
+                <input id="createBookmarkAddress" placeholder="Website address">
+                <input id="createBookmarkTags" placeholder="Tags">
+                <button id="createBookmark">Add bookmark</button>
+                <table class="table table-striped" id="bookmarkList">
+                    <th width="20%">Name</th>
+                    <th width="30%">Address</th>
+                    <th width="40%">Tags</th>
+                    <th width="10%"></th>
+                </table>
+            </section>
+        </div>
+
+        <!-- Template for BookmarkView -->
+        <script type="text/template" id="bookmarkTemplate">
+            <td width="20%"><label id="showName"><%- name %></label><input id="editName" value="<%- name %>"></td>
+            <td width="30%"><label id="showAddress"><%- address %></label><input id="editAddress" value="<%- address %>"></td>
+            <td width="40%"><label id="showTags"><%- tags %></label><input id="editTags" value="<%- tags %>"></td>
+            <td><button id="deleteBookmark" width="10%">Delete</button></td>
+        </script>
+
+        <script src="js/lib/jquery.min.js"></script>
+        <script src="js/lib/underscore-min.js"></script>
+        <script src="js/lib/backbone-min.js"></script>
+        <script src="js/lib/backbone.localStorage.js"></script>
+        <script src="js/models/bookmark.js"></script>
+        <script src="js/collections/bookmarks.js"></script>
+        <script src="js/views/bookmarkview.js"></script>
+        <script src="js/views/bookmarklistview.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>
