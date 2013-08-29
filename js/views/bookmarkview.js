@@ -31,27 +31,31 @@ var BookmarkView = Backbone.View.extend({
         this.$editName.hide();
         this.$editAddress.hide();
         this.$editTags.hide();
+        this.mode = 0;
         return this; // for chainable calls, like .render().el
     },
     /* Update */
     updateName : function() {
+        this.mode = 1;
         this.$editName.show();
         this.$editName.focus();
         this.$showName.hide();
     },
     updateAddress : function() {
+        this.mode = 2;
         this.$editAddress.show();
         this.$editAddress.focus();
         this.$showAddress.hide();
     },
     updateTags : function() {
+        this.mode = 3;
         this.$editTags.show();
         this.$editTags.focus();
         this.$showTags.hide();
     },
     nameOnEnter : function(e) {
         // ENTER_KEY is defined in app.js
-        if (e.which === ENTER_KEY) {
+        if (e.which === ENTER_KEY && this.mode === 1) {
             var value = this.$editName.val().trim();
             if (value) {
                 this.model.save({ name: value });
@@ -60,13 +64,13 @@ var BookmarkView = Backbone.View.extend({
         }
     },
     addressOnEnter : function(e) {
-        var value = this.$editAddress.val().trim();
-        if (value.indexOf('http://') !== 0) {
-            value = 'http://' + value;
-        }
-        var existingModel = this.collection.bookmarkList.where({address: value});
         // ENTER_KEY is defined in app.js
-        if (e.which === ENTER_KEY) {
+        if (e.which === ENTER_KEY && this.mode === 2) {
+            var value = this.$editAddress.val().trim();
+            if (value.indexOf('http://') !== 0) {
+                value = 'http://' + value;
+            }
+            var existingModel = this.collection.bookmarkList.where({address: value});
             if (value && value !== 'http://' && existingModel.length === 0) {
                 this.model.save({ address: value });
             }
@@ -75,7 +79,7 @@ var BookmarkView = Backbone.View.extend({
     },
     tagsOnEnter : function(e) {
         // ENTER_KEY is defined in app.js
-        if (e.which === ENTER_KEY) {
+        if (e.which === ENTER_KEY && this.mode === 3) {
             var value = this.$editTags.val().trim();
             if (value) {
                 this.model.save({ tags: value });
@@ -84,6 +88,7 @@ var BookmarkView = Backbone.View.extend({
         }
     },
     close : function() {
+        this.mode = 0;
         this.$showName.show();
         this.$showAddress.show();
         this.$showTags.show();
