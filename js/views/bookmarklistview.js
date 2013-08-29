@@ -1,22 +1,17 @@
 var BookmarkListView = Backbone.View.extend({
     el: '#bookmarkapp',
     events: {
-        'click button#createBookmark': 'addBookmark'
+        'click button#createBookmark': 'addBookmark',
+        'click button#filterBookmarks': 'filterBookmarks'
     },
     initialize : function() {
         //_.bindAll(this, 'render', 'addBookmark', 'showAddedBookmark');
         this.numBookmarks = 0;
         this.bookmarkList = new BookmarkList();
         this.bookmarkList.bind('add', this.showAddedBookmark);
-        this.render();
     },
     render : function() {
-        /*
-        var self = this;
-        this.bookmarkList.each(function(item){
-            self.showAddedBookmark(item);
-        }, this);
-        */
+        // Currently empty
     },
     getInputValues : function() {
         return {
@@ -26,7 +21,7 @@ var BookmarkListView = Backbone.View.extend({
         }
     },
     addBookmark : function() {
-        var input = this.getInputValues()
+        var input = this.getInputValues();
         var warnings = this.errorCheck({name: input.name, address: input.address});
         if (warnings) {
             var alert = this.createAlert(warnings);
@@ -49,6 +44,21 @@ var BookmarkListView = Backbone.View.extend({
         $('#createBookmarkAddress').val('');
         $('#createBookmarkTags').val('');
     },
+    showAllBookmarks : function(inputArray) {
+        $('#bookmarkList').html('');
+        for (var i=0; i<inputArray.length; i++) {
+            this.showAddedBookmark(inputArray[i]);
+        }
+    },
+    filterBookmarks : function() {
+        var input = this.getInputValues();
+        var filteredBookmarks = this.bookmarkList.filter(function(bookmark) {
+            return bookmark.get('name').indexOf(input.name) !== -1 &&
+                   bookmark.get('address').indexOf(input.address) !== -1 &&
+                   bookmark.get('tags').indexOf(input.tags) !== -1;
+        });
+        this.showAllBookmarks(filteredBookmarks);
+    },
     /* Helpers */
     createAlert : function(msg) {
         var html = '';
@@ -59,15 +69,15 @@ var BookmarkListView = Backbone.View.extend({
     },
     errorCheck : function(input) {
         var warning = [];
-        if (!input.address) {
-            warning.push('You must input an address for your bookmark.');
-        }
         if (!input.name) {
-            warning.push('You must input a name for your bookmark.');
+            warning.push('Please input a name for your bookmark.');
+        }
+        if (input.address == 'http://') {
+            warning.push('Please input an address for your bookmark.');
         }
         var existingModel = this.bookmarkList.where({address: input.address});
         if (input.address && existingModel.length > 0) {
-            warning.push('You already added this link!');
+            warning.push('You\'ve already added this link!');
         }
         return warning.join('<br>');
     }
