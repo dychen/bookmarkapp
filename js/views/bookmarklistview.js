@@ -11,7 +11,6 @@ var BookmarkListView = Backbone.View.extend({
         this.bookmarkList = new BookmarkList();
         //this.bookmarkList.bind('add', this.showAddedBookmark);
         //this.updateHeader(this.numShown);
-        $('#bookmarkList').html(this.tableHeader());
 
     },
     render : function() {
@@ -52,7 +51,7 @@ var BookmarkListView = Backbone.View.extend({
         //this.updateHeader(this.numShown);
     },
     showFilteredBookmarks : function(inputArray) {
-        $('#bookmarkList').html(this.tableHeader());
+        $('#bookmarkList').html('');
         for (var i=0; i<inputArray.length; i++) {
             this.showAddedBookmark(inputArray[i]);
         }
@@ -60,7 +59,7 @@ var BookmarkListView = Backbone.View.extend({
         //this.updateHeader(this.numShown);
     },
     showAllBookmarks : function() {
-        $('#bookmarkList').html(this.tableHeader());
+        $('#bookmarkList').html('');
         this.bookmarkList.each(function(bookmark) {
             this.showAddedBookmark(bookmark);
         }, this);
@@ -103,14 +102,6 @@ var BookmarkListView = Backbone.View.extend({
         $('#bookmarkHead').html('Bookmarks (' + n + ')');
     },
     */
-    tableHeader : function() {
-        var html = '';
-        html += '<th width="25%">Name</th>';
-        html += '<th width="25%">Address</th>';
-        html += '<th width="25%">Tags</th>';
-        html += '<th width="25%"></th>';
-        return html;
-    }
 });
 
 

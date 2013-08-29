@@ -34,7 +34,16 @@
                         <button id="showAllBookmarks" class="btn btn-large btn-primary">Show All</button>
                     </div><br>
                     <div class="well">
-                        <table class="table table-striped" id="bookmarkList"></table>
+                        <table class="table table-striped">
+                            <thead>
+                                <th width="25%">Name</th>
+                                <th width="25%">Address</th>
+                                <th width="25%">Tags</th>
+                                <th width="25%"></th>
+                            </thead>
+                            <tbody id="bookmarkList">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
@@ -54,6 +63,7 @@
         </script>
 
         <script src="js/lib/jquery.min.js"></script>
+        <script src="js/lib/jquery-ui-1.10.3.custom.min.js"></script>
         <script src="js/lib/underscore-min.js"></script>
         <script src="js/lib/backbone-min.js"></script>
         <script src="js/lib/backbone.localStorage.js"></script>
@@ -61,7 +71,6 @@
         <script src="js/collections/bookmarks.js"></script>
         <script src="js/views/bookmarkview.js"></script>
         <script src="js/views/bookmarklistview.js"></script>
-        <script src="js/routers/router.js"></script>
         <script src="js/app.js"></script>
     </body>
 </html>
