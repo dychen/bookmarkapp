@@ -34,13 +34,19 @@ var BookmarkListView = Backbone.View.extend({
         else {
             $('#alertbox').html('');
         }
-        input.address = 'http://' + input.address;
+        if (input.address.indexOf('http://') !== 0) {
+            input.address = 'http://' + input.address;
+        }
+        // Deal with empty tags
+        if (input.tags == '') {
+            input.tags = input.name;
+        }
         var bookmark = new Bookmark(input);
         this.bookmarkList.add(bookmark);
         this.showAddedBookmark(bookmark);
     },
     showAddedBookmark : function(bookmark) {
-        var bookmarkView = new BookmarkView({ model: bookmark });
+        var bookmarkView = new BookmarkView({ model: bookmark, collection: this });
         bookmarkView.render();
         $('#bookmarkList').append(bookmarkView.el);
         // Reset input form values to default on submit.
@@ -88,7 +94,7 @@ var BookmarkListView = Backbone.View.extend({
         if (!input.name) {
             warning.push('Please input a name for your bookmark.');
         }
-        if (input.address == '') {
+        if (!input.address || input.address === 'http://') {
             warning.push('Please input an address for your bookmark.');
         }
         var existingModel = this.bookmarkList.where({address: 'http://' + input.address});

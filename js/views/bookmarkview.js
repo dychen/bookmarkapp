@@ -60,10 +60,14 @@ var BookmarkView = Backbone.View.extend({
         }
     },
     addressOnEnter : function(e) {
+        var value = this.$editAddress.val().trim();
+        if (value.indexOf('http://') !== 0) {
+            value = 'http://' + value;
+        }
+        var existingModel = this.collection.bookmarkList.where({address: value});
         // ENTER_KEY is defined in app.js
         if (e.which === ENTER_KEY) {
-            var value = 'http://' + this.$editAddress.val().trim();
-            if (value) {
+            if (value && value !== 'http://' && existingModel.length === 0) {
                 this.model.save({ address: value });
             }
             this.close();
