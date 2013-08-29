@@ -97,6 +97,7 @@ var BookmarkView = Backbone.View.extend({
     },
     unshowBookmark : function() {
         $(this.el).remove();
+        this.collection.resetFields();
     },
     /* Other */
     visitPage : function() {
